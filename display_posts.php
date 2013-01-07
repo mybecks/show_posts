@@ -53,7 +53,13 @@ function show_all_posts_from_categories()
 
 	if(is_page('222'))
    	{
-	   	$extra_posts = new WP_Query( 'cat=1,5,4&showposts=-1&orderby=date' );	
+   		$args = array(
+			'category__in'  => array(1,4,5),
+			'ignore_sticky_posts' => 1,
+			'orderby'	=> date, 
+			'posts_per_page' => -1
+		);		
+	   	$extra_posts = new WP_Query( $args );	
 		if ( $extra_posts->have_posts() )
 		{
 		    while( $extra_posts->have_posts() )
