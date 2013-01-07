@@ -20,26 +20,37 @@ define ('CATEGORY', get_option("einsatzverwaltung_settings_option_category_id"))
  * @author Andre Becker
  **/
 function show_posts_handler( $atts, $content=null, $code="" ) {
-	
-	// wp_die("Count ".count($atts));
 	//code 4 displaying 
-   		extract( shortcode_atts( array(
-      		'sticky' => 'false',
-      		'latest' => 'false',
-      		'missions' => 'false',
-      		'count' => '0',
-      	), $atts ) );
+	extract( shortcode_atts( array(
+   		'sticky' => 'false',
+   		'latest' => 'false',
+   		'missions' => 'false',
+   		'count' => '0',
+   	), $atts ) );
 
-   		if($sticky != 'false')
-   		{
-   			show_sticky_posts();
-   		} else if($latest != 'false'){
-   			show_lastest_posts($count);
-   		}else if($missions != 'false'){
-   			show_lastest_missions($count);
-   		}else{
-   			show_all_posts_from_categories();
-   		}
+   	ob_start();
+
+   	if($sticky != 'false')
+   	{
+   		show_sticky_posts();
+   	} 
+   	else if($latest != 'false')
+   	{
+   		show_latest_posts($count);
+   	}
+   	else if($missions != 'false')
+   	{
+   		show_latest_missions($count);
+   	}
+   	else
+   	{
+   		show_all_posts_from_categories();
+   	}
+
+   	$output_string = ob_get_contents();
+    ob_end_clean();
+    
+    return $output_string;
 }
 
 add_shortcode( 'show_posts', 'show_posts_handler' );
@@ -47,30 +58,27 @@ add_shortcode( 'show_posts', 'show_posts_handler' );
 function show_all_posts_from_categories()
 {
 	// orig coding
-	// if(is_page('26'))
- //   	{
 	//    	$extra_posts = new WP_Query( 'cat=2,6,9,13&showposts=-1&orderby=date' );
 
-	if(is_page('222'))
-   	{
-   		$args = array(
-			'category__in'  => array(1,4,5),
-			'ignore_sticky_posts' => 1,
-			'orderby'	=> date, 
-			'posts_per_page' => -1
-		);		
-	   	$extra_posts = new WP_Query( $args );	
-		if ( $extra_posts->have_posts() )
-		{
-		    while( $extra_posts->have_posts() )
-		    {
-		        $extra_posts->the_post();
-		        get_template_part( 'content', get_post_format() );
-		    }
+   	$args = array(
+		'category__in'  => array(1,4,5),
+		'ignore_sticky_posts' => 1,
+		'orderby'	=> date, 
+		'posts_per_page' => -1
+	);
 
-		    wp_reset_postdata();
+	$extra_posts = new WP_Query( $args );
+
+	if ( $extra_posts->have_posts() )
+	{
+		while( $extra_posts->have_posts() )
+		{
+		    $extra_posts->the_post();
+		    get_template_part( 'content-list', get_post_format() );
 		}
-   	}
+
+		wp_reset_postdata();
+	}
 }
 
 function show_sticky_posts()
@@ -90,15 +98,14 @@ function show_sticky_posts()
 	    while( $show_sticky_posts->have_posts() )
 	    {
 	        $show_sticky_posts->the_post();
-	        get_template_part( 'content', get_post_format() );
+	        get_template_part( 'content-list', get_post_format() );
 	    }
 
 	    wp_reset_postdata();
 	}
 }
 
-
-function show_lastest_posts($count)
+function show_latest_posts($count)
 {
 	if($count == 0 )
 		$count = 5;
@@ -119,14 +126,14 @@ function show_lastest_posts($count)
 	    while( $latest_posts->have_posts() )
 	    {
 	        $latest_posts->the_post();
-	        get_template_part( 'content', get_post_format() );
+	         get_template_part( 'content-list', get_post_format() );
 	    }
 
 	    wp_reset_postdata();
 	}
 }
 
-function show_lastest_missions($count)
+function show_latest_missions($count)
 {
 	if($count == 0 )
 		$count = 5;
@@ -146,7 +153,7 @@ function show_lastest_missions($count)
 	    while( $latest_missions->have_posts() )
 	    {
 	        $latest_missions->the_post();
-	        get_template_part( 'content', get_post_format() );
+	        get_template_part( 'content-list', get_post_format() );
 	    }
 
 	    wp_reset_postdata();
