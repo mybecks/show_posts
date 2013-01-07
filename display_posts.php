@@ -1,14 +1,15 @@
 <?php
 /*
 Plugin Name: Show Posts
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
+Plugin URI: http://github.com/mybecks/show_posts
 Description: Display Posts of diffrent categories on a specific page
-Version: 0.1 alpha
+Version: 0.2
 Author: Andre Becker
 Author URI: la.ffbs.de
 License: GPL2
 */
 
+//Works only if Einsatzverwaltungs Plugin is installed and configured
 define ('CATEGORY', get_option("einsatzverwaltung_settings_option_category_id"));
 
 /**
