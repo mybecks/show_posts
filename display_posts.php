@@ -68,7 +68,7 @@ function show_all_posts_from_categories() {
 	if ( $extra_posts->have_posts() ) {
 		while ( $extra_posts->have_posts() ) {
 			$extra_posts->the_post();
-			get_template_part( 'content-list', get_post_format() );
+			get_template_part( 'content', get_post_format() );
 		}
 
 		wp_reset_postdata();
