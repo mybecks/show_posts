@@ -3,7 +3,7 @@
 Plugin Name: Show Posts
 Plugin URI: http://github.com/mybecks/show_posts
 Description: Display Posts of diffrent categories on a specific page
-Version: 0.4
+Version: 0.3
 Author: Andre Becker
 Author URI: la.ffbs.de
 License: GPL2
@@ -131,7 +131,7 @@ function show_latest_missions( $count ) {
 
 	$sticky = get_option( 'sticky_posts' );
 	$args = array(
-		'category__in' => CATEGORY,
+		'post_type' => 'mission',
 		'ignore_sticky_posts' => 1,
 		'orderby' => date,
 		'post__not_in' => $sticky,
