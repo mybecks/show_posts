@@ -67,6 +67,9 @@ function show_all_posts_from_categories( $display_as ) {
 
 	$extra_posts = new WP_Query( $args );
 
+	if( 'list' === $display_as)
+		echo "<ul>";
+
 	if ( $extra_posts->have_posts() ) {
 		while ( $extra_posts->have_posts() ) {
 			$extra_posts->the_post();
@@ -75,6 +78,10 @@ function show_all_posts_from_categories( $display_as ) {
 
 		wp_reset_postdata();
 	}
+	
+	if( 'list' === $display_as)
+		echo "</ul>";
+
 }
 
 function show_sticky_posts() {
@@ -87,7 +94,7 @@ function show_sticky_posts() {
 	);
 
 	$show_sticky_posts = new WP_Query( $args );
-
+	echo "<ul>";
 	if ( $show_sticky_posts->have_posts() ) {
 		while ( $show_sticky_posts->have_posts() ) {
 			$show_sticky_posts->the_post();
@@ -96,6 +103,7 @@ function show_sticky_posts() {
 
 		wp_reset_postdata();
 	}
+	echo "</ul>";
 }
 
 function show_latest_posts( $count, $display_as ) {
@@ -115,6 +123,10 @@ function show_latest_posts( $count, $display_as ) {
 
 
 	$latest_posts = new WP_Query( $args );
+
+	if( 'list' === $display_as)
+		echo "<ul>";
+
 	if ( $latest_posts->have_posts() ) {
 		while ( $latest_posts->have_posts() ) {
 			$latest_posts->the_post();
@@ -123,6 +135,8 @@ function show_latest_posts( $count, $display_as ) {
 
 		wp_reset_postdata();
 	}
+	if( 'list' === $display_as)
+		echo "</ul>";
 }
 
 function show_latest_missions( $count ) {
@@ -139,6 +153,8 @@ function show_latest_missions( $count ) {
 	);
 
 	$latest_missions = new WP_Query( $args );
+
+	echo "<ul>";
 	if ( $latest_missions->have_posts() ) {
 		while ( $latest_missions->have_posts() ) {
 			$latest_missions->the_post();
@@ -147,6 +163,7 @@ function show_latest_missions( $count ) {
 
 		wp_reset_postdata();
 	}
+	echo "</ul>";
 }
 
 function select_template( $display_as ) {
