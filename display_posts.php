@@ -10,7 +10,7 @@ License: GPL2
 */
 
 //Works only if Einsatzverwaltungs Plugin is installed and configured
-define( 'CATEGORY', get_option( "einsatzverwaltung_settings_option_category_id" ) );
+// define( 'CATEGORY', get_option( "einsatzverwaltung_settings_option_category_id" ) );
 
 /**
  * Display posts from categories using [show_posts] shortcode
@@ -61,7 +61,7 @@ function show_all_posts_from_categories( $display_as ) {
 	$args = array(
 		'category__in'  => array( 1, 4, 5 ),
 		'ignore_sticky_posts' => 1,
-		'orderby' => date,
+		'orderby' => 'date',
 		'posts_per_page' => -1
 	);
 
@@ -82,7 +82,7 @@ function show_sticky_posts() {
 	$args = array(
 		'post__in'  => $sticky,
 		'ignore_sticky_posts' => 1,
-		'orderby' => date,
+		'orderby' => 'date',
 		'posts_per_page' => 5
 	);
 
@@ -107,7 +107,7 @@ function show_latest_posts( $count, $display_as ) {
 	$args = array(
 		'category__in' => array( 1, 4, 5 ),
 		'ignore_sticky_posts' => 1,
-		'orderby' => date,
+		'orderby' => 'date',
 		'post__not_in' => $sticky,
 		'posts_per_page' => $count
 	);
@@ -133,7 +133,7 @@ function show_latest_missions( $count ) {
 	$args = array(
 		'post_type' => 'mission',
 		'ignore_sticky_posts' => 1,
-		'orderby' => date,
+		'orderby' => 'date',
 		'post__not_in' => $sticky,
 		'posts_per_page' => $count
 	);
