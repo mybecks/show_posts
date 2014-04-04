@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Show Posts
+Plugin Name: FFLA Show Posts
 Plugin URI: http://github.com/mybecks/show_posts
-Description: Display Posts of diffrent categories on a specific page
+Description: Display posts from different categories on a specific page
 Version: 0.3
 Author: Andre Becker
 Author URI: la.ffbs.de
