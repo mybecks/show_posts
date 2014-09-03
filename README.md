@@ -1,7 +1,7 @@
-Wordpress Plugin for displaying Posts
+WordPress Plugin for displaying posts
 ==========
 
-This Wordpress Plugin displays posts from multiple categories on a specific page, without customizing the theme.
+This WordPress Plugin displays posts from multiple categories on a specific page, without customizing the theme.
 
 You can display diffrent types of posts on static pages with following shortcodes:
 
