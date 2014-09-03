@@ -3,14 +3,11 @@
 Plugin Name: FFLA Show Posts
 Plugin URI: http://github.com/mybecks/show_posts
 Description: Display posts from different categories on a specific page
-Version: 0.3
+Version: 0.3.1
 Author: Andre Becker
 Author URI: la.ffbs.de
 License: GPL2
 */
-
-//Works only if Einsatzverwaltungs Plugin is installed and configured
-// define( 'CATEGORY', get_option( "einsatzverwaltung_settings_option_category_id" ) );
 
 /**
  * Display posts from categories using [show_posts] shortcode
@@ -22,6 +19,7 @@ License: GPL2
  * @author Andre Becker
  * */
 function show_posts_handler( $atts, $content=null, $code="" ) {
+	
 	//code 4 displaying
 	extract( shortcode_atts( array(
 				'sticky' => 'false',
@@ -33,15 +31,15 @@ function show_posts_handler( $atts, $content=null, $code="" ) {
 
 	ob_start();
 
-	if ( $sticky != 'false' ) {
+	if ( 'false' !== $sticky ) {
 		show_sticky_posts();
 	}
-	else if ( $latest != 'false' ) {
-			show_latest_posts( $count, $template );
-		}
-	else if ( $missions != 'false' ) {
-			show_latest_missions( $count );
-		}
+	else if ( 'false' !== $latest ) {
+		show_latest_posts( $count, $template );
+	}
+	else if ( 'false' !== $missions ) {
+		show_latest_missions( $count );
+	}
 	else {
 		show_all_posts_from_categories( $template );
 	}
@@ -55,11 +53,9 @@ function show_posts_handler( $atts, $content=null, $code="" ) {
 add_shortcode( 'show_posts', 'show_posts_handler' );
 
 function show_all_posts_from_categories( $display_as ) {
-	// orig coding
-	//     $extra_posts = new WP_Query( 'cat=2,6,9,13&showposts=-1&orderby=date' );
 
 	$args = array(
-		'category__in'  => array( 1, 4, 5 ),
+		'category__in' => array( 1, 4, 5 ),
 		'ignore_sticky_posts' => 1,
 		'orderby' => 'date',
 		'posts_per_page' => -1
@@ -67,7 +63,7 @@ function show_all_posts_from_categories( $display_as ) {
 
 	$extra_posts = new WP_Query( $args );
 
-	if( 'list' === $display_as)
+	if( 'list' === $display_as )
 		echo "<ul>";
 
 	if ( $extra_posts->have_posts() ) {
@@ -107,7 +103,7 @@ function show_sticky_posts() {
 }
 
 function show_latest_posts( $count, $display_as ) {
-	if ( $count == 0 )
+	if ( 0 === $count )
 		$count = 5;
 
 	$sticky = get_option( 'sticky_posts' );
@@ -119,8 +115,6 @@ function show_latest_posts( $count, $display_as ) {
 		'post__not_in' => $sticky,
 		'posts_per_page' => $count
 	);
-
-
 
 	$latest_posts = new WP_Query( $args );
 
@@ -135,12 +129,13 @@ function show_latest_posts( $count, $display_as ) {
 
 		wp_reset_postdata();
 	}
-	if( 'list' === $display_as)
+
+	if( 'list' === $display_as )
 		echo "</ul>";
 }
 
 function show_latest_missions( $count ) {
-	if ( $count == 0 )
+	if ( 0 === $count )
 		$count = 5;
 
 	$sticky = get_option( 'sticky_posts' );
